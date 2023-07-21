@@ -36,7 +36,7 @@ variable "AKEYLESS_AUTH_JWT" {
 
 resource "akeyless_static_secret" "secret" {
   path  = "/terraform-tests/secret"
-  value = "this value was set from terraform at ${timestamp()}"
+  value = "this value was set from terraform at ${formatdate("DD MMM YYYY hh:mm ZZZ", timestamp())}"
 }
 
 data "akeyless_secret" "secret" {
