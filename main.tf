@@ -19,19 +19,24 @@ provider "akeyless" {
   api_gateway_address = "https://api.akeyless.io"
 
   jwt_login {
-    access_id = "p-96bszq455x2z"
-    jwt       = var.AKEYLESS_AUTH_JWT_DEBUG
+    access_id = var.AKEYLESS_ACCESS_ID
+    jwt       = var.AKEYLESS_AUTH_JWT
   }
 }
 
-variable "AKEYLESS_AUTH_JWT_DEBUG" {
+variable "AKEYLESS_ACCESS_ID" {
+    type = string
+    description = "Access ID for the JWT Auth Method for Terraform cloud. Provided by Terraform Cloud through a terraform variable added to the workspace."
+}
+
+variable "AKEYLESS_AUTH_JWT" {
   type        = string
   description = "Terraform Cloud Workload Identity JWT for authentication into Akeyless. Provided by Terraform Cloud through an agent pool and hooks."
 }
 
 resource "akeyless_static_secret" "secret" {
   path  = "/terraform-tests/secret"
-  value = "this value was set from terraform"
+  value = "this value was set from terraform at ${timestamp()}"
 }
 
 data "akeyless_secret" "secret" {
